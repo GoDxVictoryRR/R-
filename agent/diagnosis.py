@@ -116,7 +116,7 @@ class DiagnosisEngine:
         api_key: Optional[str] = None,
         base_url: Optional[str] = None,
         model: Optional[str] = None,
-        timeout: float = 30.0,
+        timeout: float = 60.0,
     ) -> None:
         self.api_key = api_key or os.environ["LLM_API_KEY"]
         self.base_url = (base_url or os.environ.get("LLM_BASE_URL", "https://integrate.api.nvidia.com/v1")).rstrip("/")
