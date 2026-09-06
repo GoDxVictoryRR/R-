@@ -154,13 +154,13 @@ This project defines 4 mandatory human review points — see
 | 1 | LLM API key setup | ✅ Cleared |
 | 2 | Guardrail engine sign-off | ✅ Cleared |
 | 3 | Benchmark ground truth sign-off | ✅ Cleared |
-| 4 | Final review | Pending |
+| 4 | Final review | ✅ Cleared |
 
 ---
 
 ## Test Suite
 
-52 unit tests across 6 modules, all passing:
+52 tests across 7 test suites (48 unit + 4 integration with live LLM), all passing:
 
 | Module | Tests | Coverage |
 |--------|-------|---------|
