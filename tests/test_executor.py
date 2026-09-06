@@ -7,7 +7,6 @@ Covers:
   - Import-boundary test: no file other than executor.py may import /control/* paths.
 """
 
-import subprocess
 import sys
 from pathlib import Path
 from unittest.mock import MagicMock, patch
