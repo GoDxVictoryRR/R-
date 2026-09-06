@@ -26,10 +26,8 @@ Ground truth reviewed and approved at Checkpoint #3.
 
 ---
 
-## Human Checkpoint #4 — Final Review (PENDING)
+## Human Checkpoint #4 — Final Review: CLEARED 2026-09-06
 
-Required before project is marked complete.
-See `.agents/human-checkpoints.md` §4 and `.agents/skills/final-review/SKILL.md`.
-
-Action needed: human reads `guardrail.py` and `scenarios.py` end-to-end and
-confirms they can explain every rule and every expected outcome without help.
+Human read `guardrail.py` and `scenarios.py` end-to-end.
+`REVIEWED_BY_HUMAN: 2026-09-06` comment added to both files.
+Project is complete.

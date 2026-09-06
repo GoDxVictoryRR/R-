@@ -1,4 +1,5 @@
 """
+# REVIEWED_BY_HUMAN: 2026-09-06 — Checkpoint #4 cleared by project owner.
 Benchmark scenario definitions for SentinelLoop.
 
 Each scenario describes a fault to inject (type + seed) and the ground-truth

@@ -1,4 +1,5 @@
 """
+# REVIEWED_BY_HUMAN: 2026-09-06 — Checkpoint #4 cleared by project owner.
 Guardrail / policy engine for SentinelLoop.
 
 This is the safety core of the agent. All actions proposed by the diagnosis module
