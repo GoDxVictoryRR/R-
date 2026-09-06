@@ -152,7 +152,7 @@ class DiagnosisEngine:
                 {"role": "user", "content": user_prompt},
             ],
             "temperature": 0.2,   # low temperature for reproducible structured output
-            "max_tokens": 512,
+            "max_tokens": 1024,
             "response_format": {"type": "json_object"},
         }
 

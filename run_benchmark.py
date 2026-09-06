@@ -197,8 +197,8 @@ def main(argv: list[str] | None = None) -> int:
     )
     args = parser.parse_args(argv)
 
-    print("\n⚠️  REMINDER: Ensure Checkpoint #3 (human ground-truth sign-off) is complete.")
-    print("   Proceed only if a human has reviewed and approved benchmark/scenarios.py.\n")
+    print("\n[!] REMINDER: Ensure Checkpoint #3 (human ground-truth sign-off) is complete.")
+    print("    Proceed only if a human has reviewed and approved benchmark/scenarios.py.\n")
 
     tc = TestClient(app)
     scenarios = SCENARIOS
@@ -214,7 +214,7 @@ def main(argv: list[str] | None = None) -> int:
     for i, sc in enumerate(scenarios, 1):
         print(f"  [{i:02d}/{len(scenarios):02d}] {sc.id} ({sc.fault_type}) ...", end=" ", flush=True)
         r = run_scenario(sc, tc, disable_guardrail=False)
-        status = "✓" if r.get("passed") else ("ERR" if "error" in r else "✗")
+        status = "PASS" if r.get("passed") else ("ERR" if "error" in r else "FAIL")
         print(status)
         results_enabled.append(r)
 
@@ -229,7 +229,7 @@ def main(argv: list[str] | None = None) -> int:
         for i, sc in enumerate(scenarios, 1):
             print(f"  [{i:02d}/{len(scenarios):02d}] {sc.id} ({sc.fault_type}) ...", end=" ", flush=True)
             r = run_scenario(sc, tc, disable_guardrail=True)
-            status = "✓" if r.get("passed") else ("ERR" if "error" in r else "✗")
+            status = "PASS" if r.get("passed") else ("ERR" if "error" in r else "FAIL")
             print(status)
             results_disabled.append(r)
         metrics_disabled = compute_metrics(results_disabled)
@@ -275,9 +275,9 @@ def main(argv: list[str] | None = None) -> int:
         md = metrics_disabled
         prevented = m.get("false_auto_action_rate", 0) - md.get("false_auto_action_rate", 0)
         print(f"\n  GUARDRAIL IMPACT (enabled vs disabled):")
-        print(f"  False auto-actions w/ guardrail    : {m['false_auto_action_rate']:.0%}")
-        print(f"  False auto-actions w/o guardrail   : {md['false_auto_action_rate']:.0%}")
-        print(f"  ► Guardrail prevented              : {abs(prevented):.0%} of scenarios")
+        print(f"  False auto-actions w/ guardrail  : {m['false_auto_action_rate']:.0%}")
+        print(f"  False auto-actions w/o guardrail : {md['false_auto_action_rate']:.0%}")
+        print(f"  Guardrail prevented              : {abs(prevented):.0%} of scenarios")
     print(f"{'='*50}\n")
 
     return 0
