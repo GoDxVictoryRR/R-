@@ -731,45 +731,51 @@ HTML_CONTENT = """<!DOCTYPE html>
 """
 
 async def generate():
-    pdf_path = os.path.abspath("SentinelLoop_Project_Summary_Interview_Guide.pdf")
-    html_path = os.path.abspath("SentinelLoop_Project_Summary.html")
+    repo_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    pdf_path = os.path.join(repo_root, "SentinelLoop_Project_Summary_Interview_Guide.pdf")
+    html_path = os.path.join(repo_root, "scripts", "temp_summary.html")
 
     # Write HTML
     with open(html_path, "w", encoding="utf-8") as f:
         f.write(HTML_CONTENT)
-    print(f"Wrote HTML to {html_path}")
+    print(f"Wrote temp HTML to {html_path}")
 
-    # Launch Playwright Chromium
-    async with async_playwright() as p:
-        browser = await p.chromium.launch()
-        page = await browser.new_page()
-        await page.goto(f"file:///{html_path.replace(os.sep, '/')}")
-        
-        # Generate PDF with clean options
-        await page.pdf(
-            path=pdf_path,
-            format="A4",
-            print_background=True,
-            margin={
-                "top": "16mm",
-                "right": "16mm",
-                "bottom": "18mm",
-                "left": "16mm"
-            },
-            display_header_footer=True,
-            header_template="<div></div>",
-            footer_template="""
-            <div style="width: 100%; font-size: 8px; color: #64748b; font-family: sans-serif; display: flex; justify-content: space-between; padding: 0 16mm;">
-                <span>SentinelLoop — Autonomous Incident Response Agent Portfolio</span>
-                <span>Page <span class="pageNumber"></span> of <span class="totalPages"></span></span>
-            </div>
-            """
-        )
-        await browser.close()
+    try:
+        # Launch Playwright Chromium
+        async with async_playwright() as p:
+            browser = await p.chromium.launch()
+            page = await browser.new_page()
+            await page.goto(f"file:///{html_path.replace(os.sep, '/')}")
+            
+            # Generate PDF with clean options
+            await page.pdf(
+                path=pdf_path,
+                format="A4",
+                print_background=True,
+                margin={
+                    "top": "16mm",
+                    "right": "16mm",
+                    "bottom": "18mm",
+                    "left": "16mm"
+                },
+                display_header_footer=True,
+                header_template="<div></div>",
+                footer_template="""
+                <div style="width: 100%; font-size: 8px; color: #64748b; font-family: sans-serif; display: flex; justify-content: space-between; padding: 0 16mm;">
+                    <span>SentinelLoop — Autonomous Incident Response Agent Portfolio</span>
+                    <span>Page <span class="pageNumber"></span> of <span class="totalPages"></span></span>
+                </div>
+                """
+            )
+            await browser.close()
 
-    print(f"Generated PDF successfully at: {pdf_path}")
-    if os.path.exists(pdf_path):
-        print(f"File size: {os.path.getsize(pdf_path):,} bytes")
+        print(f"Generated PDF successfully at: {pdf_path}")
+        if os.path.exists(pdf_path):
+            print(f"File size: {os.path.getsize(pdf_path):,} bytes")
+    finally:
+        if os.path.exists(html_path):
+            os.remove(html_path)
+            print("Cleaned up temporary HTML file.")
 
 if __name__ == "__main__":
     asyncio.run(generate())
